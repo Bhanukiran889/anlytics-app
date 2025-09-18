@@ -8,3 +8,5 @@ const SaleSchema = new mongoose.Schema({
     totalRevenue: { type: Number, required: true },
     reportDate: { type: Date, required: true },
 });
+
+module.exports = mongoose.model('Sale', SaleSchema);
