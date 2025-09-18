@@ -21,7 +21,7 @@ const seed = async () => {
 
     // create customers
     const regions = ['North', 'South', 'East', 'West', 'Central'];
-    const Customers = Array.from({ length: 80 }, () => ({
+    const Customers = Array.from({ length: 1000 }, () => ({
         name: faker.person.fullName(),
         region: faker.helpers.arrayElement(regions),
         type: faker.helpers.arrayElement(['Individual', 'Business']),
@@ -31,7 +31,7 @@ const seed = async () => {
 
     // create products
     const categories = ['Electronics', 'Clothing', 'Home', 'Sports', 'Books'];
-    const Products = Array.from({ length: 50 }, () => ({
+    const Products = Array.from({ length: 1000 }, () => ({
         name: faker.commerce.productName(),
         category: faker.helpers.arrayElement(categories),
         price: parseFloat(faker.commerce.price(10, 1000)),
