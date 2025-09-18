@@ -1,6 +1,6 @@
 const express = require('express');
 const {query, validationResult} = require('express-validator');
-const {getRevenue, getTopProducts} = require('../controllers/analytics');
+const {getRevenue} = require('../controllers/analytics');
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ const dateChecks = [
   query('endDate').isISO8601().withMessage('endDate required (ISO8601)')
 ];
 
-router.get('./revenue', dateChecks, async (req, res) => {
+router.get('/revenue', dateChecks, async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
