@@ -46,7 +46,7 @@ const seed = async () => {
 
     // create sales over last 2 years
     const sales = [];
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 5000; i++) {
         const product = faker.helpers.arrayElement(createdProducts);
         const customer = faker.helpers.arrayElement(createdCustomers);
         const qty = faker.number.int({ min: 1, max: 10 });
