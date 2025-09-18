@@ -22,8 +22,8 @@ const seed = async () => {
     // create customers
     const regions = ['North', 'South', 'East', 'West', 'Central'];
     const Customers = Array.from({length: 80}, () => ({
-        name: faker.person.Fullname(),
-        regions: faker.helpers.arrayElement(regions),
+        name: faker.person.fullName(),
+        region: faker.helpers.arrayElement(regions),
         type: faker.helpers.arrayElement(['Individual', 'Business']),
     }));
     const createdCustomers = await Customer.insertMany(Customers);
