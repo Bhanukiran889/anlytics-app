@@ -1,3 +1,14 @@
+// GET /api/analytics/reports?type=TYPE&startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
+router.get('/reports', async (req, res, next) => {
+  const { getReport } = require('../controllers/analytics');
+  getReport(req, res, next);
+});
+
+// POST /api/analytics/reports
+router.post('/reports', async (req, res, next) => {
+  const { saveReport } = require('../controllers/analytics');
+  saveReport(req, res, next);
+});
 
 const express = require('express');
 const {query, validationResult} = require('express-validator');
