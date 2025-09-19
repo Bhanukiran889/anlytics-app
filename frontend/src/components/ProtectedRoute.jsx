@@ -1,17 +1,10 @@
-import { Cookie } from "lucide-react";
-import { Route, Redirect } from "react-router-dom";
+import React from "react"
+import { Navigate, Outlet } from "react-router-dom"
+import Cookies from "js-cookie"
 
-function ProtectedRoute({ component: Component, ...rest }) {
-    const token = Cookie.get("jwt_token");
-
-    return (
-        <Route
-            {...rest}
-            render={(props) =>
-                token ? <Component {...props} /> : <Redirect to="/login" />
-            }
-        />
-    );
+function ProtectedRoute() {
+  const token = Cookies.get("jwt_token")
+  return token ? <Outlet /> : <Navigate to="/login" replace />
 }
 
-export default ProtectedRoute;
+export default ProtectedRoute
