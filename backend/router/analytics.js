@@ -1,20 +1,12 @@
-// GET /api/analytics/reports?type=TYPE&startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
-router.get('/reports', async (req, res, next) => {
-  const { getReport } = require('../controllers/analytics');
-  getReport(req, res, next);
-});
-
-// POST /api/analytics/reports
-router.post('/reports', async (req, res, next) => {
-  const { saveReport } = require('../controllers/analytics');
-  saveReport(req, res, next);
-});
 
 const express = require('express');
 const {query, validationResult} = require('express-validator');
 const {getRevenue, getTopProducts} = require('../controllers/analytics');
 
 const router = express.Router();
+
+
+
 
 
 // Validation middleware
@@ -72,8 +64,19 @@ router.get('/sales-by-category', dateChecks, async (req, res, next) => {
   getSalesByCategory(req, res, next);
 });
 
+// GET /api/analytics/reports?type=TYPE&startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
+router.get('/reports', async (req, res, next) => {
+  const { getReport } = require('../controllers/analytics');
+  getReport(req, res, next);
+});
 
 
+
+// POST /api/analytics/reports
+router.post('/reports', async (req, res, next) => {
+  const { saveReport } = require('../controllers/analytics');
+  saveReport(req, res, next);
+});
 
 module.exports = router;
 
