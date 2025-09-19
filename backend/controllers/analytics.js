@@ -1,5 +1,30 @@
+const Report = require('../models/Report');
+// GET /api/analytics/reports?type=TYPE&startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
+exports.getReport = async (req, res, next) => {
+    try {
+        const { type, ...params } = req.query;
+        if (!type) return res.status(400).json({ error: 'type is required' });
+        // Find the most recent report with matching type and params
+        const report = await Report.findOne({ type, params }).sort({ createdAt: -1 });
+        if (!report) return res.status(404).json({ error: 'Report not found' });
+        res.json(report);
+    } catch (error) {
+        next(error);
+    }
+};
 
-
+// POST /api/analytics/reports
+exports.saveReport = async (req, res, next) => {
+    try {
+        const { type, params, data } = req.body;
+        if (!type || !params || !data) return res.status(400).json({ error: 'type, params, and data are required' });
+        const report = new Report({ type, params, data });
+        await report.save();
+        res.status(201).json(report);
+    } catch (error) {
+        next(error);
+    }
+};
 
 const Sale = require('../models/Sale');
 const mongooss = require('mongoose');
