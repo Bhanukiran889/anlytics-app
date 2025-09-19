@@ -1,10 +1,3 @@
-// GET /api/analytics/sales-by-region?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
-router.get('/sales-by-region', dateChecks, async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-  const { getSalesByRegion } = require('../controllers/analytics');
-  getSalesByRegion(req, res, next);
-});
 
 const express = require('express');
 const {query, validationResult} = require('express-validator');
@@ -45,6 +38,32 @@ router.get('/top-customers', dateChecks, async (req, res, next) => {
   const { getTopCustomers } = require('../controllers/analytics');
   getTopCustomers(req, res, next);
 });
+
+
+
+
+// GET /api/analytics/sales-by-region?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
+router.get('/sales-by-region', dateChecks, async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  const { getSalesByRegion } = require('../controllers/analytics');
+  getSalesByRegion(req, res, next);
+});
+
+
+
+
+// GET /api/analytics/sales-by-category?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
+router.get('/sales-by-category', dateChecks, async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  const { getSalesByCategory } = require('../controllers/analytics');
+  getSalesByCategory(req, res, next);
+});
+
+
+
+
 module.exports = router;
 
 
