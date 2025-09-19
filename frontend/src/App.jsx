@@ -1,13 +1,23 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+
+import ProtectedRoute from "./components/ProtectedRoute"
+import Login from "./pages/Login"
+import Dashboard from "./pages/Dashboard"
+
+import "./App.css"
 
 function App() {
-
   return (
-   <>
-   <div>
-    <h1 className='text-red-800 text-4xl flex align-center'>Hello World</h1>
-   </div>
-   </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        
+        {/* Wrap protected routes inside ProtectedRoute */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
