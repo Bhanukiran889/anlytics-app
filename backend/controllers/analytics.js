@@ -1,5 +1,6 @@
 
 
+
 const Sale = require('../models/Sale');
 const mongooss = require('mongoose');
 
@@ -138,6 +139,45 @@ exports.getSalesByRegion = async (req, res, next) => {
             }},
             { $project: {
                 region: '$_id',
+                totalRevenue: 1,
+                totalSales: 1,
+                orderCount: 1,
+                _id: 0
+            }},
+            { $sort: { totalRevenue: -1 } }
+        ]);
+        res.json(agg);
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+// GET /api/analytics/sales-by-category?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
+exports.getSalesByCategory = async (req, res, next) => {
+    try {
+        const { startDate, endDate } = req.query;
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        const agg = await Sale.aggregate([
+            { $match: { reportDate: { $gte: start, $lte: end } } },
+            { $lookup: {
+                from: 'products',
+                localField: 'product',
+                foreignField: '_id',
+                as: 'product'
+            }},
+            { $unwind: '$product' },
+            { $group: {
+                _id: '$product.category',
+                totalRevenue: { $sum: '$totalRevenue' },
+                totalSales: { $sum: '$quantity' },
+                orderCount: { $sum: 1 }
+            }},
+            { $project: {
+                category: '$_id',
                 totalRevenue: 1,
                 totalSales: 1,
                 orderCount: 1,
