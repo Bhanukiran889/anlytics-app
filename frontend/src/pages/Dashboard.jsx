@@ -7,6 +7,8 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import api from "../services/api";
 import ChartCard from "@/components/ChartCard";
+import KeyMetrics from "@/components/KeyMatrics";
+import Navbar from "@/components/Navbar";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -91,10 +93,10 @@ const Dashboard = () => {
     fetchData();
   }, [startDate, endDate]);
 
-  const handleLogout = () => {
-    Cookies.remove("jwt_token");
-    navigate("/login", { replace: true });
-  };
+  // const handleLogout = () => {
+  //   Cookies.remove("jwt_token");
+  //   navigate("/login", { replace: true });
+  // };
 
   // Chart configs
   const revenueOptions = {
@@ -208,14 +210,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="p-6">
-        <div className="flex justify-between items-center">
-          <Button variant="default" onClick={handleLogout}>
-            Logout
-          </Button>
-          <ModeToggle />
-        </div>
-      </div>
+      <Navbar />
       <div className="p-6 space-y-6">
         <DateRangePicker
           startDate={startDate}
@@ -223,6 +218,7 @@ const Dashboard = () => {
           setStartDate={setStartDate}
           setEndDate={setEndDate}
         />
+        <KeyMetrics metrics={ chartsData.revenue || {}} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="col-span-1 md:col-span-1 lg:col-span-2">
             <ChartCard
@@ -256,7 +252,7 @@ const Dashboard = () => {
             option={categoryOptions}
             loading={loading}
             error={error}
-          />
+            />
         </div>
       </div>
     </>
