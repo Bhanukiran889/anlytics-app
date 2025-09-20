@@ -11,7 +11,7 @@ function ChartCard({ title, option, loading, error }) {
       <CardContent>
         {loading && <p>Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
-        {!loading && !error && <ReactECharts option={option} style={{ height: "400px" }} />}
+        {!loading && !error && <ReactECharts option={option} style={{ height: "400px",}} />}
       </CardContent>
     </Card>
   )
