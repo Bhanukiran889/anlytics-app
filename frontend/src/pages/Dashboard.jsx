@@ -98,38 +98,38 @@ const Dashboard = () => {
 
   // Chart configs
   const revenueOptions = {
-  tooltip: {
-    trigger: "axis",
-    axisPointer: {
-      type: "shadow",
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "shadow",
+      },
     },
-  },
-  xAxis: {
-    type: "category",
-    data: ["Total Revenue", "Total Sales", "Average Sale Value"],
-  },
-  yAxis: { type: "value" },
-  series: [
-    {
-      data: [
-        chartsData.revenue?.totalRevenue || 0,
-        chartsData.revenue?.totalSales || 0,
-        chartsData.revenue?.avageSaleValue || 0,
-      ],
-      type: "bar",
-      itemStyle: { color: "#1fb866" },
+    xAxis: {
+      type: "category",
+      data: ["Total Revenue", "Total Sales", "Average Sale Value"],
     },
-  ],
-};
+    yAxis: { type: "value" },
+    series: [
+      {
+        data: [
+          chartsData.revenue?.totalRevenue || 0,
+          chartsData.revenue?.totalSales || 0,
+          chartsData.revenue?.avageSaleValue || 0,
+        ],
+        type: "bar",
+        itemStyle: { color: "#1fb866" },
+      },
+    ],
+  };
 
   // Map products data to expected format
   const productsOptions = {
     tooltip: {
-    trigger: "axis",
-    axisPointer: {
-      type: "shadow",
+      trigger: "axis",
+      axisPointer: {
+        type: "shadow",
+      },
     },
-  },
     xAxis: {
       type: "category",
       data: chartsData.products?.map((p) => p.productName),
@@ -147,11 +147,11 @@ const Dashboard = () => {
   // Map customers data to expected format
   const customersOptions = {
     tooltip: {
-    trigger: "axis",
-    axisPointer: {
-      type: "shadow",
+      trigger: "axis",
+      axisPointer: {
+        type: "shadow",
+      },
     },
-  },
     xAxis: { type: "category", data: chartsData.customers?.map((c) => c.name) },
     yAxis: { type: "value" },
     series: [
@@ -166,11 +166,11 @@ const Dashboard = () => {
   // Map region data to expected format
   const regionOptions = {
     tooltip: {
-    trigger: "axis",
-    axisPointer: {
-      type: "shadow",
+      trigger: "axis",
+      axisPointer: {
+        type: "shadow",
+      },
     },
-  },
     xAxis: { type: "category", data: chartsData.region?.map((r) => r.region) },
     yAxis: { type: "value" },
     series: [
@@ -184,9 +184,9 @@ const Dashboard = () => {
 
   // Map category data to expected format
   const categoryOptions = {
-     tooltip: {
-    trigger: 'item'
-  },
+    tooltip: {
+      trigger: "item",
+    },
     series: [
       {
         name: "Sales by Category",
