@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/mode-toggle";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import api from "../services/api";
 import ChartCard from "@/components/ChartCard";
 import KeyMetrics from "@/components/KeyMatrics";
 import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/button";
+import ReportsHistory from "@/components/Reports";
 
 const Dashboard = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -24,6 +24,25 @@ const Dashboard = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  // Save report to backend
+  const handleSaveReport = async (type, data) => {
+    if (!startDate || !endDate || !data) return;
+
+    try {
+      await api.post("/analytics/reports", {
+        type, // e.g., "revenue", "top-products"
+        params: {
+          startDate: startDate.toISOString().split("T")[0],
+          endDate: endDate.toISOString().split("T")[0],
+        },
+        data,
+      });
+      alert(`${type} report saved successfully!`);
+    } catch (err) {
+      console.error(err);
+      alert(`Failed to save ${type} report`);
+    }
+  };
 
   // Redirect if no token
   useEffect(() => {
@@ -92,6 +111,16 @@ const Dashboard = () => {
 
     fetchData();
   }, [startDate, endDate]);
+
+  const loadSavedReport = (report) => {
+  setStartDate(new Date(report.params.startDate));
+  setEndDate(new Date(report.params.endDate));
+  setChartsData((prev) => ({
+    ...prev,
+    [report.type]: report.data,
+  }));
+};
+
 
   // const handleLogout = () => {
   //   Cookies.remove("jwt_token");
@@ -208,6 +237,8 @@ const Dashboard = () => {
     ],
   };
 
+
+  
   return (
     <>
       <Navbar />
@@ -218,7 +249,7 @@ const Dashboard = () => {
           setStartDate={setStartDate}
           setEndDate={setEndDate}
         />
-        <KeyMetrics metrics={ chartsData.revenue || {}} />
+        <KeyMetrics metrics={chartsData.revenue || {}} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="col-span-1 md:col-span-1 lg:col-span-2">
             <ChartCard
@@ -226,34 +257,86 @@ const Dashboard = () => {
               option={revenueOptions}
               loading={loading}
               error={error}
-            />
+            >
+              <Button
+                variant="outline"
+                className="mt-2"
+                onClick={() => handleSaveReport("revenue", chartsData.revenue)}
+              >
+                Save Report
+              </Button>
+            </ChartCard>
           </div>
-
           <ChartCard
             title="Top Products"
             option={productsOptions}
             loading={loading}
             error={error}
-          />
+          >
+            <Button
+              variant="outline"
+              className="mt-2"
+              onClick={() =>
+                handleSaveReport("top-products", chartsData.products)
+              }
+            >
+              Save Report
+            </Button>
+          </ChartCard>
+
           <ChartCard
             title="Top Customers"
             option={customersOptions}
             loading={loading}
             error={error}
-          />
+          >
+            <Button
+              variant="outline"
+              className="mt-2"
+              onClick={() =>
+                handleSaveReport("top-customers", chartsData.customers)
+              }
+            >
+              Save Report
+            </Button>
+          </ChartCard>
+
           <ChartCard
             title="Sales by Region"
             option={regionOptions}
             loading={loading}
             error={error}
-          />
+          >
+            <Button
+              variant="outline"
+              className="mt-2"
+              onClick={() =>
+                handleSaveReport("sales-by-region", chartsData.region)
+              }
+            >
+              Save Report
+            </Button>
+          </ChartCard>
+
           <ChartCard
             title="Sales by Category"
             option={categoryOptions}
             loading={loading}
             error={error}
-            />
+          >
+            <Button
+              variant="outline"
+              className="mt-2"
+              onClick={() =>
+                handleSaveReport("sales-by-category", chartsData.category)
+              }
+            >
+              Save Report
+            </Button>
+          </ChartCard>
         </div>
+        <ReportsHistory onViewReport={loadSavedReport} />
+
       </div>
     </>
   );
