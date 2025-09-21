@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 
 const corsOptions = {
   origin: [
-      "https://anlytics-app-six.vercel.app/", // deployed frontend on Vercel
+      "https://anlytics-app-six.vercel.app", // deployed frontend on Vercel
     "http://localhost:5173"      // local dev frontend
   ],
   methods: "GET,POST,PUT,DELETE,OPTIONS",
