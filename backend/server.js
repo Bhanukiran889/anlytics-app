@@ -4,6 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
 const analyticsRoutes = require('./router/analytics');
+const authRoutes = require('./router/auth');
 const { errorHandler } = require('./middleware/errorHandler');
 dotenv.config();
 
@@ -18,6 +19,8 @@ app.get("/api/health", (req, res) => {
     res.send("API is running...");
 });
 
+
+app.use('/api/auth', authRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
 app.use(errorHandler);
