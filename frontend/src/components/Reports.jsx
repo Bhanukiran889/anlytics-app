@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import io from "socket.io-client";
 import api from "../services/api";
 import {
   Table,
@@ -9,6 +10,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+
+
+const socket = io("http://localhost:5000"); // Adjust URL as needed
 
 const ReportsHistory = ({ onViewReport }) => {
   const [reports, setReports] = useState([]);
@@ -34,6 +38,12 @@ const ReportsHistory = ({ onViewReport }) => {
 
   useEffect(() => {
     fetchReports();
+    socket.on('newReport', (newReport) => {
+      setReports((prevReports) => [newReport, ...prevReports]);
+    });
+    return () => {
+      socket.off('newReport');
+    };
   }, []);
 
   return (

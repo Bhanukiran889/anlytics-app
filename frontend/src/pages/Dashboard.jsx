@@ -37,7 +37,6 @@ const Dashboard = () => {
         },
         data,
       });
-      alert(`${type} report saved successfully!`);
     } catch (err) {
       console.error(err);
       alert(`Failed to save ${type} report`);
