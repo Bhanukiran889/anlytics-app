@@ -16,7 +16,7 @@ This project is a MERN stack Sales Analytics Dashboard built for the Shanture Co
 ---
 
 ## Tech Stack
-- **Backend**: Node.js, Express.js, MongoDB (Mongoose)
+- **Backend**: Node.js, Express.js, MongoDB (Mongoose), Socket.io(websockets)
 - **Frontend**: React, Apache ECharts, Tailwind CSS, shadcn/ui
 - **Database**: MongoDB (local or Atlas)
 
@@ -61,8 +61,8 @@ project-root/
 - `GET /api/analytics/top-customers?startDate&endDate`
 - `GET /api/analytics/sales-by-region?startDate&endDate`
 - `GET /api/analytics/sales-by-category?startDate&endDate`
-- `POST /api/analytics/reports` — Save a report
-- `GET /api/analytics/reports` — Get all saved reports
+- `POST /api/analytics/reports` — Save a report 
+- `GET /api/analytics/reports` — Get all saved reports (Real time data update on change in the reports with websockets)
 
 ---
 
@@ -125,18 +125,8 @@ PORT=5000
 ---
 
 ## Limitations & Notes
-- No real-time updates (WebSockets) are implemented, as the data is static unless seeded/admin-updated.
 - No UI for adding/editing sales, products, or customers (data is seeded via script).
 - Bonus features (real-time, export, advanced filtering) are not included.
-
----
-
-## Submission Checklist
-- [x] Database seeded with 2+ years of data
-- [x] All analytics endpoints implemented
-- [x] Frontend dashboard with charts, tables, and reports history
-- [x] JWT authentication
-- [x] README with setup, schema, and API docs
 
 ---
 
