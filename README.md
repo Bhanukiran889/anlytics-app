@@ -126,7 +126,7 @@ PORT=5000
 
 ## Limitations & Notes
 - No UI for adding/editing sales, products, or customers (data is seeded via script).
-- Bonus features (real-time, export, advanced filtering) are not included.
+- Bonus features (export, advanced filtering) are not included.
 
 ---
 
