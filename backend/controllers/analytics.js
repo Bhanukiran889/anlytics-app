@@ -1,6 +1,7 @@
 const Report = require('../models/Report');
 
 
+
 const Sale = require('../models/Sale');
 const mongooss = require('mongoose');
 
@@ -219,7 +220,8 @@ exports.saveReport = async (req, res, next) => {
         const { type, params, data } = req.body;
         if (!type || !params || !data) return res.status(400).json({ error: 'type, params, and data are required' });
         const report = new Report({ type, params, data });
-        await report.save();
+        const saveReport = await report.save();
+    req.app.get('io').emit('newReport', saveReport); // Emit event to all connected clients
         res.status(201).json(report);
     } catch (error) {
         next(error);
