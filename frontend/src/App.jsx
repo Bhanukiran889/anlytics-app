@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login.jsx";
+import Login from "./pages/login";
 
 import "./App.css";
 
