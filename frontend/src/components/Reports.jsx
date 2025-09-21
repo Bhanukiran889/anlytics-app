@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 
-const socket = io("http://localhost:5000"); // Adjust URL as needed
+const socket = io("https://anlytics-app.onrender.com"); // Adjust URL as needed
 
 const ReportsHistory = ({ onViewReport }) => {
   const [reports, setReports] = useState([]);
