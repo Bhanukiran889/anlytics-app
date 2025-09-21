@@ -194,10 +194,18 @@ exports.getSalesByCategory = async (req, res, next) => {
 // GET /api/analytics/reports?type=TYPE&startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
 exports.getReport = async (req, res, next) => {
     try {
-        const { type, ...params } = req.query;
+        // If no query params, return all reports
+        if (Object.keys(req.query).length === 0) {
+            const reports = await Report.find({}).sort({ createdAt: -1 });
+            return res.json(reports);
+        }
+        const { type, startDate, endDate } = req.query;
         if (!type) return res.status(400).json({ error: 'type is required' });
-        // Find the most recent report with matching type and params
-        const report = await Report.findOne({ type, params }).sort({ createdAt: -1 });
+        const report = await Report.findOne({
+            type,
+            'params.startDate': startDate,
+            'params.endDate': endDate
+        }).sort({ createdAt: -1 });
         if (!report) return res.status(404).json({ error: 'Report not found' });
         res.json(report);
     } catch (error) {
